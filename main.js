@@ -59,14 +59,37 @@ const posts = [
 
 const container = document.getElementById('container');
 container.innerHTML = '';
+const postIcons = document.getElementsByClassName('post-meta__icon');
 
-for(let singlePost of posts){
+
+// ciclo lunghezza array
+for(let index in posts){
+    // creo post
+    const newPost = posts[index];
+    createPost(newPost);
+
+      
+    // gestione immagine del profilo null
+    if(newPost.author.image === null){
+        // console.log(postIcons[index]);
+        postIcons[index].innerHTML = 
+        `
+            <div class="profile-pic-default">
+                <span>
+                    ${getInitials(newPost.author.name)}
+                </span>
+            </div>
+        `;
+    };
+
+};
+
+// funzione che crea il singolo post
+function createPost (singlePost){
     //creazione div post
     const post = document.createElement('div');
-    post.className = 'post';
-  
-    let date = singlePost.created.split("-").reverse().join("/");
-    console.log(date);
+    post.className = 'post';  
+    
 
     //contenuto nel post
     post.innerHTML=
@@ -79,8 +102,12 @@ for(let singlePost of posts){
                     alt="${singlePost.author.name}">                    
                 </div>
                 <div class="post-meta__data">
-                    <div class="post-meta__author">${singlePost.author.name}</div>
-                    <div class="post-meta__time">${date}</div>
+                    <div class="post-meta__author">
+                        ${singlePost.author.name}
+                    </div>
+                    <div class="post-meta__time">
+                        ${singlePost.created.split("-").reverse().join("/")}
+                    </div>
                 </div>                    
             </div>
         </div>
@@ -104,7 +131,29 @@ for(let singlePost of posts){
             </div> 
         </div>  
     `;
-       
-    container.append(post);
+    
 
+    container.append(post);
 };
+
+
+// funzione per avere iniziali
+function getInitials(fullName) {
+    
+    const arrayFullName = fullName.split(' ');
+    // console.log('arrayFullName', arrayFullName);
+    let initials = '';
+
+    for(let i = 0; i < arrayFullName.length; i++){     
+        const name = arrayFullName[i] ;
+        // console.log('name', name);
+        const initial = name[0];
+        // console.log('initial',initial);
+        initials += initial;
+    };
+
+    // console.log('initials', initials);
+    return initials;
+};
+
+
