@@ -60,6 +60,8 @@ const posts = [
 const container = document.getElementById('container');
 container.innerHTML = '';
 const postIcons = document.getElementsByClassName('post-meta__icon');
+const likeButton = document.getElementsByClassName('like-button');
+const counter = document.getElementsByClassName('js-likes-counter');
 
 
 // ciclo lunghezza array
@@ -81,8 +83,17 @@ for(let index in posts){
             </div>
         `;
     };
+   
+    // click su Mi Piace
+    likeButton[index].addEventListener('click',function(){
+        this.classList.add('like-button--liked');
+        counter[index].innerHTML = newPost.likes + 1;
+        
+    });
 
 };
+
+
 
 // funzione che crea il singolo post
 function createPost (singlePost){
@@ -126,7 +137,7 @@ function createPost (singlePost){
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${singlePost.likes}</b> persone
+                    Piace a <b id="like-counter-${singlePost.id}" class="js-likes-counter">${singlePost.likes}</b> persone
                 </div>
             </div> 
         </div>  
